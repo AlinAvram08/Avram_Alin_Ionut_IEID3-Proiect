@@ -1,0 +1,89 @@
+﻿@page
+@model Avram_Alin_Proiect.Pages.AutoParts.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>AutoPart</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="AutoPart.Name" class="control-label"></label>
+                <input asp-for="AutoPart.Name" class="form-control" />
+                <span asp-validation-for="AutoPart.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AutoPart.Code" class="control-label"></label>
+                <input asp-for="AutoPart.Code" class="form-control" />
+                <span asp-validation-for="AutoPart.Code" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="AutoPart.SupplierID" class="control-label">Suplier</label>
+                <select asp-for="AutoPart.SupplierID" class="form-control" asp-items="ViewBag.SupplierID">
+                </select>
+                <span asp-validation-for="AutoPart.SupplierID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AutoPart.Price" class="control-label"></label>
+                <input asp-for="AutoPart.Price" class="form-control" />
+                <span asp-validation-for="AutoPart.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AutoPart.AcquisitionDate" class="control-label"></label>
+                <input asp-for="AutoPart.AcquisitionDate" class="form-control" />
+                <span asp-validation-for="AutoPart.AcquisitionDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AutoPart.CarID" class="control-label">Car Name</label>
+                <select asp-for="AutoPart.CarID" class="form-control" asp-items="ViewBag.CarID">
+                </select>
+                <span asp-validation-for="AutoPart.CarID" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+ <div class="table">
+ <table>
+ <tr>
+ @{
+ int cnt = 0;
+ foreach (var cat in Model.AssignedCategoryDataList)
+ {
+ if (cnt++ % 3 == 0)
+{
+@:</tr><tr>
+ }
+@:<td>
+ <input type="checkbox"
+ name="selectedCategories"
+ value="@cat.CategoryID"
+ @(Html.Raw(cat.Assigned ?
+"checked=\"checked\"" : "")) />
+ @cat.CategoryID @: @cat.Name
+ @:</td>
+ }
+ @:</tr>
+ }
+ </table>
+ </div>
+ </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,102 @@
+﻿@page "/{id:int?}"
+@model Avram_Alin_Proiect.Pages.AutoParts.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+             <strong>Find</strong> AutoPart | Supplier | Car:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th><a asp-page="./Index" asp-route-sortOrder="@Model.NameSort">
+                @Html.DisplayNameFor(model => model.AutoPart[0].Name)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.CodeSort">
+                @Html.DisplayNameFor(model => model.AutoPart[0].Code)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SupplierSort">
+                @Html.DisplayNameFor(model => model.AutoPart[0].Supplier.Name)
+                </a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.PriceSort">
+                @Html.DisplayNameFor(model => model.AutoPart[0].Price)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AutoPart[0].AcquisitionDate)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.CarSort">
+                @Html.DisplayNameFor(model => model.AutoPart[0].Car.CarName)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AutoPart[0].AutoPartCategories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.AutoPartD.AutoParts)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.AutoPartID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Supplier.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AcquisitionDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Car.CarName)
+                </td>
+                <td>
+                    @{
+                        foreach (var category in item.AutoPartCategories)
+                        {
+                            @category.Category.ID @: @category.Category.CategoryName <br />
+                        }
+                    }
+                </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
